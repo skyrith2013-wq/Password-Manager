@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="css/sign style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>RESISTER</h1>
+        <form id="loginForm">
+            <div class="name input">
+                <label for="name">Name: </label>
+                <input type="id" placeholder="Enter Your Name" id="name">
+            </div>
+
+            <div class="id input">
+                <label for="name">ID: </label>
+                <input type="id" placeholder="Create New" id="id">
+            </div>
+
+            <div class="pass input">
+                <label for="pass">Password: </label>
+                <input type="text" placeholder="Create New" id="password">
+            </div>
+
+            <button type="submit">SUBMIT</button>
+        </form>
+        <div>
+
+            <script>
+                loginForm = document.getElementById("loginForm");
+
+                loginForm.addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    const name = document.getElementById("name").value;
+                    const password = document.getElementById("password").value;
+                    const id = document.getElementById("id").value;
+
+                    const allUsers = JSON.parse(localStorage.getItem("users")) || [];
+
+                    const existing = allUsers.find(u =>
+                        u.id === id ||
+                        u.password === password ||
+                        u.name === name);
+
+                    const h1 = document.getElementsByTagName("h1")[0];
+                    if (existing) {
+                        h1.textContent = "Details already exists. Please choose something else."
+                    } else {
+
+
+                        let users = JSON.parse(localStorage.getItem("users")) || [];
+
+                        const thisUser = {
+                            name: name,
+                            id: id,
+                            password: password,
+                            index: `<div class="create">+</div>`
+                        };
+
+                        users.push(thisUser);
+
+                        localStorage.setItem("users", JSON.stringify(users));
+
+                        sessionStorage.setItem("name", id);
+                        window.location.href = "index.html";
+                    }
+                });
+
+            </script>
+        </div>
+</body>
+
+</html>
